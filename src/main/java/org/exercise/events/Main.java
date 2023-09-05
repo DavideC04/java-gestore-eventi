@@ -27,10 +27,69 @@ public class Main {
             int totalSeats = Integer.parseInt(input.nextLine());
             // creo il nuovo evento
             Evento evento = new Evento(title, date, totalSeats);
+            // inizializzo una variabile per uscire dal ciclo
+            boolean exit = false;
+            // itero un ciclo while
+            while(!exit) {
+                // chiedo all'utente quali operazione vuole svolgere
+                System.out.println("Quale operazione vuoi svolgere? 1- Prenotare  2- Cancellare una prenotazione  3- Uscire");
+                String choice =input.nextLine();
+                // uso uno switch
+                switch (choice){
+                    case "1":
+                        // chiedo quante prenotazioni vuole fare l'utente
+                        System.out.println("Quante prenotazioni vuoi effettuare? ");
+                        int reservation = Integer.parseInt(input.nextLine());
+                        try{
+                            // chiedo quanti posti vuole prenotare
+                            System.out.println("Quanti posti vuoi prenotare? ");
+                            int seatsToBook = Integer.parseInt(input.nextLine());
+                            // aggiungo la prenotazione
+                            evento.prenotaPosto(seatsToBook);
+                            System.out.println("Prenotazione effettuata con successo!");
+                        }catch (IllegalArgumentException e){
+                            // se risulta un dato non valido, stampo un messaggio
+                            System.out.println("Errore nella prenotazione: " + e.getMessage());
+                        }
+
+                        // mostro a video i posti prenotati
+                        System.out.println("Posti prenotati: " + evento.getBookedSeats());
+                        // mostro a video i posti disponibili
+                        System.out.println("Posti disponibili: " + (evento.getTotalSeats() - evento.getBookedSeats()));
+                        break;
+                    case "2":
+                        // chiedo all'utente quante prenotazioni vuole disdire
+                        System.out.println("Quante prenotazioni vuoi disdire? ");
+                        int cancel = Integer.parseInt(input.nextLine());
+                        try {
+                            // chiedo all'utente quanti posti disdire dalla prenotazione
+                            System.out.println("Inserisici il numero di posti da disdire: ");
+                            int seatsToCancel = Integer.parseInt(input.nextLine());
+                            // riduco il numero di posti nella prenotazione
+                            evento.disdiciPrenotazione(seatsToCancel);
+                            System.out.println("Cancellazione della prenotazione effettuata con successo!");
+                        } catch (IllegalArgumentException e){
+                            // se il numero di posti da cancellare è maggiore di quelli prenotati, stampo un messaggio
+                            System.out.println("Errore nella cancellazione: " + e.getMessage());
+                        }
+                        // mostro a video i posti prenotati dopo la cancellazione
+                        System.out.println("Posti prenotati: " + evento.getBookedSeats());
+                        // mostro a video i posti disponibili dopo la cancellazione
+                        System.out.println("Posti disponibili: " + (evento.getTotalSeats() - evento.getBookedSeats()));
+                        break;
+                    case"3":
+                        System.out.println("Le auguro una buona giornata!");
+                        exit = true;
+
+                }
+            }
         } catch (IllegalArgumentException e){
             // se i dati dell'utente non sono validi, stampo un messaggio
             System.out.println("Input non validi: " + e.getMessage());
         }
+
+
+
 
 
 

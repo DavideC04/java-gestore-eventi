@@ -71,6 +71,10 @@ public class Evento {
         this.date = date;
     }
 
+    public int getTotalSeats() {
+        return totalSeats;
+    }
+
     public int getBookedSeats() {
         return bookedSeats;
     }
