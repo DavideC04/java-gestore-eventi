@@ -1,4 +1,8 @@
 package org.exercise.events;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /*
 La consegna è di creare una classe Evento che abbia le seguenti proprietà:
 ● titolo
@@ -20,14 +24,90 @@ Aggiungete eventuali metodi (public e private) che vi aiutino a svolgere le funz
  */
 public class Evento {
     // ATTRIBUTI
+    private String title;
+    private LocalDate date;
+    private int totalSeats;
+    private int bookedSeats;
 
 
     // COSTRUTTORI
 
+    public Evento(String title, LocalDate date, int totalSeats) throws IllegalArgumentException{
+        // se la data è passata, sollevo un'eccezione
+        if (date.isBefore(LocalDate.now()) ){
+            throw new IllegalArgumentException("Errore: la data non deve essere passata!");
+        }
+        // se il numero dei posti è negativo, sollevo un'eccezione
+        if (totalSeats <= 0){
+            throw new IllegalArgumentException("Errore: il numero dei posti deve essere positivo!");
+        }
+
+        this.title = title;
+        this.date = date;
+        this.totalSeats = totalSeats;
+        this.bookedSeats = 0;
+    }
+
 
     // GETTER E SETTER
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) throws IllegalArgumentException {
+        // se la data è già passata, sollevo un'eccezione
+        if (date.isBefore(LocalDate.now())){
+            throw new IllegalArgumentException("Errore: la data è già passata!");
+        }
+        this.date = date;
+    }
+
+    public int getBookedSeats() {
+        return bookedSeats;
+    }
 
 
     // METODI
+    // metodo per prenotare un posto, con eventuali eccezioni
+    public void prenotaPosto(int seatsToBook) throws IllegalArgumentException{
+        // se la data è passata , sollevo un'eccezione
+        if (date.isBefore(LocalDate.now())){
+            throw new IllegalArgumentException("Impossibile prenotare per un evento già passato!");
+        }
+        // se non ci sono posti disponibili, sollevo un' eccezione
+        if (bookedSeats + seatsToBook > totalSeats){
+            throw  new IllegalArgumentException("Non ci sono posti disponibili.");
+        }
+        // aggiungo i posti prenotati
+        bookedSeats += seatsToBook;
+    }
+
+    // metodo per disdire una prenotazione, con eventuali eccezioni
+    public void disdiciPrenotazione(int seatsToCancel) throws IllegalArgumentException{
+        // se la data è passata, sollevo un'eccezione
+        if (date.isBefore(LocalDate.now())){
+            throw new IllegalArgumentException("Impossibile disdire una prenotazione per un evento già passato!");
+        }
+        // se non ci sono prenotazioni da cancellare, sollevo un'eccezione
+        if (bookedSeats - seatsToCancel < 0){
+            throw new IllegalArgumentException("Non ci sono prenotazioni da cancellare.");
+        }
+        // riduco i posti prenotati
+        bookedSeats -= seatsToCancel;
+    }
+
+    // override del metodo toString()
+    @Override
+    public String toString() {
+        return  "date=" + date.format(DateTimeFormatter.ISO_LOCAL_DATE) + ", title='" + title ;
+    }
 }
