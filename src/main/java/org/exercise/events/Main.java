@@ -1,5 +1,7 @@
 package org.exercise.events;
 
+import java.time.LocalDate;
+import java.util.Locale;
 import java.util.Scanner;
 
 /*
@@ -14,6 +16,21 @@ public class Main {
     public static void main(String[] args) {
         // inizializzo lo scanner
         Scanner input = new Scanner(System.in);
+        // chiedo all'utente le informazioni dell'evento
+        // metto le informazioni in un try
+        try {
+            System.out.println("Inserisci il titolo dell'evento: ");
+            String title = input.nextLine();
+            System.out.println("Inserisci la data dell'evento: ");
+            LocalDate date = LocalDate.parse(input.nextLine());
+            System.out.println("Inserisci il numero di posti totati dell'evento: ");
+            int totalSeats = Integer.parseInt(input.nextLine());
+            // creo il nuovo evento
+            Evento evento = new Evento(title, date, totalSeats);
+        } catch (IllegalArgumentException e){
+            // se i dati dell'utente non sono validi, stampo un messaggio
+            System.out.println("Input non validi: " + e.getMessage());
+        }
 
 
 
