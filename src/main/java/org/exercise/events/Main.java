@@ -21,7 +21,7 @@ public class Main {
         try {
             System.out.println("Inserisci il titolo dell'evento: ");
             String title = input.nextLine();
-            System.out.println("Inserisci la data dell'evento: ");
+            System.out.println("Inserisci la data dell'evento (YYYY-MM-DD): ");
             LocalDate date = LocalDate.parse(input.nextLine());
             System.out.println("Inserisci il numero di posti totati dell'evento: ");
             int totalSeats = Integer.parseInt(input.nextLine());
